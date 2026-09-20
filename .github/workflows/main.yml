@@ -1,0 +1,37 @@
+name: Build Chishti Computers & Developers AI Assistant v51
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Install All Dependencies & Vision Fix
+      run: |
+        python -m pip install --upgrade pip setuptools wheel
+        pip install pipwin
+        pipwin install pyaudio
+        pip install pyttsx3 SpeechRecognition requests pyautogui wikipedia comtypes pypiwin32 psutil opencv-python mediapipe pyinstaller
+
+    - name: Build Executable with PyInstaller
+      run: |
+        python -m PyInstaller --noconsole --onefile --name cb_developers_ai_assistant cb_developers_ai_assistant.py
+
+    - name: Upload Compiled EXE Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: Chishti-Computers-AI-Assistant-v51-EXE
+        path: dist/cb_developers_ai_assistant.exe
+        
