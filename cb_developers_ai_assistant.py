@@ -24,7 +24,7 @@ class ChishtiComputersAIAssistant:
     def __init__(self, root):
         self.root = root
         self.root.title("CHISHTI COMPUTERS & DEVELOPERS : OMEGA AI SUITE v51")
-        self.root.geometry("1300-800")
+        self.root.geometry("1300x800")  # यहाँ 'x' सही कर दिया गया है
         self.root.configure(bg="#030712") # Cinematic Sci-Fi Dark Theme
 
         # Initialize SQLite Brain Database
@@ -240,7 +240,6 @@ class ChishtiComputersAIAssistant:
                             if not scanned:
                                 self.log_to_terminal("SECURITY", "Authorized Boss Face Detected! Access Granted.")
                                 self.speak("Welcome Boss. Access granted.")
-                                # Log to SQLite face_logs
                                 try:
                                     self.cursor.execute("INSERT INTO face_logs (timestamp, event_type, status) VALUES (?, ?, ?)",
                                                         (str(datetime.datetime.now()), "Boss Face Recognition", "Authorized"))
@@ -302,7 +301,7 @@ class ChishtiComputersAIAssistant:
             face_rows = self.cursor.fetchall()
             self.log_to_terminal("BRAIN", "--- RECENT FACE RECOGNITION LOGS ---")
             for f_row in face_rows:
-                self.log_to_terminal("FACE_LOG", f"{f_row[1]} | {f_row[2]} -> {f_row[3]}")
+                self.log_to_uterminal("FACE_LOG", f"{f_row[1]} | {f_row[2]} -> {f_row[3]}")
         except:
             self.log_to_terminal("BRAIN", "Failed to fetch memory records.")
 
@@ -314,4 +313,3 @@ if __name__ == "__main__":
     root = tk.Tk()
     app = ChishtiComputersAIAssistant(root)
     root.mainloop()
-  
